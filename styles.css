@@ -1,0 +1,454 @@
+/* ================================================
+     BlackJack 21 - Card Counting Trainer
+   Main Stylesheet
+   ================================================ */
+
+/* ---------- CSS Variables ---------- */
+:root {
+    --green-dark: #0d4f2e;
+  --green-mid: #1a6b3a;
+  --green-felt: #2d8c4e;
+  --gold: #c9a227;
+      --gold-light: #f0c040;
+      --red-card: #c0392b;
+      --black-card: #1a1a1a;
+  --white: #ffffff;
+      --off-white: #f5f5f0;
+      --gray-light: #e8e8e8;
+      --gray-mid: #999999;
+  --shadow: 0 4px 20px rgba(0,0,0,0.3);
+  --radius: 12px;
+  --radius-sm: 6px;
+  --transition: 0.25s ease;
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #0a0a0a;
+  color: var(--white);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ================================================
+     HEADER / NAV
+     ================================================ */
+.header {
+    background: linear-gradient(135deg, #0a0a0a 0%, var(--green-dark) 100%);
+  border-bottom: 3px solid var(--gold);
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow);
+}
+
+.logo h1 {
+    font-size: 2rem;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(201,162,39,0.4);
+}
+
+.logo p {
+    font-size: 0.85rem;
+  color: var(--gray-mid);
+  margin-top: 2px;
+}
+
+.nav {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-btn {
+    background: transparent;
+  color: var(--gray-mid);
+  border: 2px solid transparent;
+  padding: 10px 22px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+    transition: all var(--transition);
+}
+
+.nav-btn:hover {
+    color: var(--white);
+  border-color: var(--gold);
+  }
+
+.nav-btn.active {
+  background: var(--gold);
+  color: #000;
+  border-color: var(--gold);
+}
+
+    /* ================================================
+         SECTIONS
+   ================================================ */
+.section {
+    display: none;
+  padding: 48px 40px;
+  animation: fadeIn 0.3s ease;
+}
+
+.section.active { display: block; }
+
+.section > h2 {
+  font-size: 2rem;
+  color: var(--gold);
+  margin-bottom: 32px;
+  border-bottom: 2px solid var(--green-mid);
+  padding-bottom: 12px;
+    }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ================================================
+   HOME SECTION
+   ================================================ */
+      .welcome-container {
+          text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+    }
+
+.welcome-container h2 {
+  font-size: 2.4rem;
+    color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.welcome-container > p {
+          font-size: 1.1rem;
+  color: var(--gray-mid);
+  margin-bottom: 48px;
+  line-height: 1.8;
+}
+
+.feature-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.feature-card {
+  background: linear-gradient(145deg, #111 0%, #1a2a1a 100%);
+  border: 1px solid var(--green-mid);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+  text-align: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(45,140,78,0.25);
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  color: var(--gold-light);
+  margin-bottom: 12px;
+}
+
+    .feature-card p {
+    color: var(--gray-mid);
+  font-size: 0.95rem;
+  }
+
+/* ================================================
+     BUTTONS
+       ================================================ */
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--gold) 0%, #a37d18 100%);
+    color: #000;
+  box-shadow: 0 4px 15px rgba(201,162,39,0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(201,162,39,0.6);
+}
+
+.btn-secondary {
+    background: transparent;
+  color: var(--gold);
+  border: 2px solid var(--gold);
+}
+
+.btn-secondary:hover {
+    background: var(--gold);
+  color: #000;
+}
+
+.btn-danger {
+    background: var(--red-card);
+  color: var(--white);
+}
+
+.btn-danger:hover {
+    background: #a93226;
+      transform: translateY(-2px);
+}
+
+.btn-count {
+    background: #1e3a1e;
+  color: var(--white);
+  border: 2px solid var(--green-mid);
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+  min-width: 60px;
+}
+
+.btn-count:hover {
+    background: var(--green-mid);
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: scale(1.08);
+}
+
+.btn-count.correct {
+  background: #1b5e20;
+  border-color: #4caf50;
+  color: #4caf50;
+}
+
+.btn-count.wrong {
+  background: #7f0000;
+  border-color: #f44336;
+      color: #f44336;
+  }
+
+/* ================================================
+     LESSONS SECTION
+     ================================================ */
+.lessons-container {
+    display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 28px;
+  }
+
+.lesson-card {
+    background: linear-gradient(145deg, #111 0%, #1a2a1a 100%);
+  border: 1px solid var(--green-mid);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.lesson-card:hover {
+    transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+}
+
+.lesson-header {
+    background: var(--green-dark);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lesson-header h3 {
+    font-size: 1.15rem;
+  color: var(--white);
+}
+
+.difficulty {
+    padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+.lesson-card:nth-child(1) .difficulty { background: #1b5e20; color: #81c784; }
+.lesson-card:nth-child(2) .difficulty { background: #e65100; color: #ffcc80; }
+.lesson-card:nth-child(3) .difficulty { background: #4a148c; color: #ce93d8; }
+
+.lesson-content {
+    padding: 24px;
+                                      }
+
+.lesson-content > p {
+    color: var(--gray-mid);
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+                                      }
+
+/* Card Values Table */
+.card-values {
+    background: #0a1a0a;
+  border: 1px solid #2d4a2d;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.value-row {
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  border-bottom: 1px solid #1a2d1a;
+}
+
+.value-row:last-child { border-bottom: none; }
+
+  .value-row .cards {
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.value-row .value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 4px;
+  min-width: 50px;
+  text-align: center;
+}
+
+/* Color-code count values */
+.value-row:has(.value:not(:empty)) .value {
+    background: #1a2d1a;
+}
+
+/* ================================================
+   PRACTICE SECTION
+     ================================================ */
+.practice-container {
+    display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Controls Bar */
+.game-controls {
+    background: #111;
+  border: 1px solid var(--green-mid);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.control-group {
+    display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-group label {
+    font-size: 0.85rem;
+      color: var(--gray-mid);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.control-group select {
+    background: #1a1a1a;
+  color: var(--white);
+  border: 2px solid var(--green-mid);
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  cursor: pointer;
+  min-width: 160px;
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.control-group select:focus {
+    border-color: var(--gold);
+}
+
+/* Game Area */
+.game-area {
+    background: radial-gradient(ellipse at center, var(--green-felt) 0%, var(--green-dark) 70%, #0a1a0a 100%);
+  border: 3px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 32px;
+  box-shadow: inset 0 0 60px rgba(0,0,0,0.4), var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Live Count HUD */
+.game-header {
+    display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  }
+
+.game-stat {
+    background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(201,162,39,0.3);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  text-align: center;
+}
+
+.game-stat .label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--gray-mid);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.game-stat .value {
+  display: block;
+  font-size
