@@ -3,21 +3,45 @@
   <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>BlackJack 21 - Card Counting Trainer</title>
+        <title>Blackjack Training — Card Counting Trainer</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="styles.css">
   </head>
 <body>
+      <!-- Full-screen entrance; dismissed once per browser session -->
+      <div id="site-enter-overlay" class="site-enter-overlay" aria-modal="true" role="dialog" aria-labelledby="site-enter-heading" aria-describedby="site-enter-desc">
+        <div class="site-enter-backdrop"></div>
+        <div class="site-enter-inner">
+          <img src="assets/logo.png" alt="" class="site-enter-logo" width="480" height="480" />
+          <h2 id="site-enter-heading" class="visually-hidden">Blackjack Training</h2>
+          <p id="site-enter-desc" class="site-enter-copy">
+            Master the art of card counting. Practice real-time deck tracking with High-Low, Omega II, and Wong Halves,
+            refine your betting strategy in live play, and analyze your performance with session analytics—all in one place.
+          </p>
+          <button type="button" class="btn site-enter-cta" id="site-enter-btn">Enter Casino</button>
+          <p class="site-enter-hint">Click to continue to the trainer</p>
+        </div>
+      </div>
+
       <div class="container">
                 <!-- Navigation Header -->
                 <header class="header">
                               <div class="logo">
-                                                <h1>♠ BlackJack 21 ♠</h1>
-                                              <p>Master Card Counting & Advanced Strategies</p>
+                                <button type="button" class="logo-brand" data-section="home" title="Home">
+                                  <img src="assets/logo.png" alt="" class="logo-mark" width="120" height="120" decoding="async" />
+                                  <span class="logo-text">
+                                    <span class="logo-title">Blackjack Training</span>
+                                    <span class="logo-sub">Card counting · Play smart · Win more</span>
+                                  </span>
+                                </button>
                               </div>
                             <nav class="nav">
                                             <button class="nav-btn active" data-section="home">Home</button>
                                             <button class="nav-btn" data-section="lessons">Lessons</button>
                                             <button class="nav-btn" data-section="practice">Practice</button>
+                                            <button class="nav-btn" data-section="live">Live Play</button>
                                             <button class="nav-btn" data-section="stats">Statistics</button>
                             </nav>
                 </header>
@@ -259,6 +283,125 @@
                                                                                       <button class="btn btn-secondary" onclick="endGame()">End Game</button>
                                                               </div>
                                           </div>
+                          </section>
+
+                          <!-- Live Play (up to 30 min): full hands + bet vs true count -->
+                          <section id="live" class="section section-live">
+                            <header class="live-section-head">
+                              <h2>Live Play</h2>
+                              <p class="live-intro">Up to <strong>30 minutes</strong> per session. The shoe counts itself—watch the true count, <strong>size your bet</strong> before each deal, then use <strong>basic strategy</strong> on your cards. Dealer stands on all 17s · double after split allowed.</p>
+                            </header>
+                            <div class="live-setup live-setup-card" id="live-setup">
+                              <h3 class="live-setup-title">Before you start</h3>
+                              <ol class="live-setup-steps">
+                                <li>Pick how the deck is counted (High-Low, Omega II, or Wong Halves).</li>
+                                <li>Choose shoe size (4–8 decks).</li>
+                                <li>Tap <em>Start session</em>—the clock runs until time runs out or you end.</li>
+                              </ol>
+                              <div class="live-controls">
+                                <div class="control-group">
+                                  <label for="live-system-select">Count system</label>
+                                  <select id="live-system-select">
+                                    <option value="highlow" selected>High-Low</option>
+                                    <option value="omega2">Omega II</option>
+                                    <option value="wonghalves">Wong Halves</option>
+                                  </select>
+                                </div>
+                                <div class="control-group">
+                                  <label for="live-deck-count">Shoe (decks)</label>
+                                  <select id="live-deck-count">
+                                    <option value="4" selected>4 decks</option>
+                                    <option value="6">6 decks</option>
+                                    <option value="8">8 decks</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <button type="button" class="btn btn-primary live-start-cta" id="live-start-btn">Start session · 30 min max</button>
+                            </div>
+                            <div class="live-session" id="live-session" hidden>
+                              <div class="live-session-layout">
+                                <aside class="live-sidebar" aria-label="Session stats">
+                                  <div class="live-timer-box">
+                                    <span class="label">Time remaining</span>
+                                    <span class="value" id="live-time-left">30:00</span>
+                                  </div>
+                                  <div class="live-stat-list">
+                                    <div class="live-stat-item">
+                                      <span class="live-stat-label">True count</span>
+                                      <span class="live-stat-value" id="live-true-count">0.0</span>
+                                    </div>
+                                    <div class="live-stat-item">
+                                      <span class="live-stat-label">Running count</span>
+                                      <span class="live-stat-value" id="live-running-count">0</span>
+                                    </div>
+                                    <div class="live-stat-item">
+                                      <span class="live-stat-label">Bankroll</span>
+                                      <span class="live-stat-value" id="live-bankroll">1000</span>
+                                    </div>
+                                    <div class="live-stat-item">
+                                      <span class="live-stat-label">Hands</span>
+                                      <span class="live-stat-value" id="live-hands-played">0</span>
+                                    </div>
+                                  </div>
+                                  <button type="button" class="btn btn-secondary live-btn-end" id="live-end-session-btn">End session &amp; results</button>
+                                </aside>
+                                <div class="live-main">
+                                  <p class="live-bet-hint" id="live-bet-hint" role="status">Place your bet using the chips, then deal.</p>
+                                  <div class="live-bet-panel" id="live-bet-panel">
+                                    <div class="live-bet-row">
+                                      <div class="live-bet-pill live-bet-pill--suggested">
+                                        <span class="live-bet-pill-label">Suggested bet</span>
+                                        <span class="live-bet-pill-value"><span id="live-suggested-value">1</span> units</span>
+                                      </div>
+                                      <div class="live-bet-pill live-bet-pill--yours">
+                                        <span class="live-bet-pill-label">Your bet</span>
+                                        <span class="live-bet-pill-value"><span id="live-your-bet">2</span> units</span>
+                                      </div>
+                                    </div>
+                                    <p class="live-bet-caption">Match the suggested size when you can—raise in +TC, stay small when TC ≤ 0.</p>
+                                    <div class="live-chips" id="live-chips" role="group" aria-label="Bet size in units">
+                                      <button type="button" class="live-chip" data-units="1" aria-pressed="false">1</button>
+                                      <button type="button" class="live-chip" data-units="2" aria-pressed="true">2</button>
+                                      <button type="button" class="live-chip" data-units="4" aria-pressed="false">4</button>
+                                      <button type="button" class="live-chip" data-units="6" aria-pressed="false">6</button>
+                                      <button type="button" class="live-chip" data-units="8" aria-pressed="false">8</button>
+                                    </div>
+                                    <button type="button" class="btn btn-primary live-deal-wide" id="live-deal-btn">Deal cards</button>
+                                  </div>
+                                  <div class="live-game-area" id="live-game-area" hidden>
+                                    <div class="live-felt">
+                                      <div class="live-felt-zone live-felt-zone--dealer">
+                                        <span class="live-felt-label">Dealer</span>
+                                        <div class="live-cards" id="live-dealer-cards"></div>
+                                        <p class="live-hand-total" id="live-dealer-total"></p>
+                                      </div>
+                                      <div class="live-felt-divider"></div>
+                                      <div class="live-felt-zone live-felt-zone--player">
+                                        <span class="live-felt-label">You</span>
+                                        <div id="live-player-blocks" class="live-player-hands"></div>
+                                      </div>
+                                    </div>
+                                    <div class="live-actions" id="live-actions" hidden>
+                                      <div class="live-actions-row live-actions-main">
+                                        <button type="button" class="btn live-action-btn live-action-hit" id="live-hit" title="Draw another card">Hit</button>
+                                        <button type="button" class="btn live-action-btn live-action-stand" id="live-stand" title="Keep your total">Stand</button>
+                                      </div>
+                                      <div class="live-actions-row live-actions-extra">
+                                        <button type="button" class="btn btn-secondary live-action-2nd" id="live-double" title="One card, double bet">Double</button>
+                                        <button type="button" class="btn btn-secondary live-action-2nd" id="live-split" title="Split pair">Split</button>
+                                      </div>
+                                    </div>
+                                    <p class="live-phase-msg" id="live-phase-msg" role="status"></p>
+                                  </div>
+                                  <div class="feedback-area live-feedback-box" id="live-feedback"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="live-results" id="live-results" hidden>
+                              <h3>Session report</h3>
+                              <div id="live-results-body"></div>
+                              <button type="button" class="btn btn-primary" id="live-results-close">Back to setup</button>
+                            </div>
                           </section>
               
                           <!-- Statistics Section -->
